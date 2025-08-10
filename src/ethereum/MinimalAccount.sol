@@ -72,14 +72,13 @@ contract MinimalAccount is IAccount, Ownable{
     }
 
     //A signature is valid if it is the minimal account owner
-    function validateUserOp(PackedUserOperation calldata userOp,bytes32 userOpHash,uint256 missingAccountFunds) 
+    function validateUserOp(PackedUserOperation calldata userOp, bytes32 userOpHash, uint256 missingAccountFunds)
         external
-        requireFromEntryPoint 
+        requireFromEntryPoint
         returns (uint256 validationData){
-
             validationData = _validateSignature(userOp, userOpHash);
-            //need to validate the nonce as well 
-            //can add paymaster functionality here
+            // _validateNonce()
+            _payPrefund(missingAccountFunds);
     }
     
 
